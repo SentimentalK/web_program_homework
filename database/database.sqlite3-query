@@ -1,0 +1,60 @@
+-- database: ./database.sqlite
+
+-- 启用外键约束 (SQLite 默认关闭)
+PRAGMA foreign_keys = ON;
+
+DROP TABLE users;
+DROP TABLE purchases;
+DROP VIEW courses;
+
+-- 用户表
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT UNIQUE NOT NULL,
+    created_at DATETIME DEFAULT (datetime('now','localtime'))
+);
+
+
+ATTACH DATABASE '/Users/sentimentalk/codes/fr/textbook/textbook.sqlite' AS source;
+CREATE TABLE main.contents AS SELECT * FROM source.assimil;
+DETACH DATABASE source;
+
+CREATE TABLE purchases (
+    user_id INTEGER NOT NULL,
+    course_id INTEGER NOT NULL, 
+    purchased_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, course_id),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(course_id) REFERENCES courses(course_id),
+    CONSTRAINT unique_user_course UNIQUE (user_id, course_id)
+);
+
+CREATE VIEW courses AS
+SELECT CAST(id AS INTEGER) AS course_id, 
+       GROUP_CONCAT(id) AS ids,
+       CASE WHEN CAST(id AS INTEGER) BETWEEN 1 and 3 THEN 1 ELSE 0 END AS free
+FROM contents
+GROUP BY CAST(id AS INTEGER);
+
+SELECT course_id,FREE FROM courses ORDER BY course_id;
+
+SELECT * from contents 
+WHERE CAST(id AS FLOAT) BETWEEN 1.00 AND 1.99
+ORDER BY CAST(id AS FLOAT);
+
+-- 课程表
+SELECT 
+    c.course_id,
+    CASE 
+        WHEN p.user_id IS NOT NULL THEN 2
+        WHEN c.free = 1 THEN 1
+        ELSE 0
+    END AS status
+FROM courses c
+LEFT JOIN purchases p 
+    ON c.course_id = p.course_id AND p.user_id = 7;
+
+            

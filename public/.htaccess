@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Ensure the request is routed to index.php if it's not a file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ router.php [QSA,L]
+
+# Preserve the Authorization header
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]

@@ -1,0 +1,255 @@
+
+:root {
+    --primary-color: #3498db;
+    --primary-dark: #2980b9;
+    --text-color: #2c3e50;
+    --error-color: #ff4444;
+    --background-light: #f8f9fa;
+    --border-color: #bdc3c7;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    color: var(--text-color);
+    background: #f8f9fa;
+}
+
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.nav-container a {
+    color: var(--primary-color);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-container a:hover {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.nav-container span {
+    color: #bdc3c7;
+    padding: 0.8rem 1.2rem;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 300;
+    font-size: 2.5rem;
+    margin: 2rem 0;
+    color: var(--text-color);
+}
+
+
+.chapter {
+    background: white;
+    
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    transition: box-shadow 0.3s ease;
+    
+}
+
+.chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+h2 {
+    font-weight: 500;
+    font-size: 2rem;
+    margin: 0;
+    flex-grow: 1;
+}
+
+
+.play-btn {
+    cursor: pointer;
+    width: 3.2rem;
+    height: 3.2rem;
+    border: none;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.play-btn::before {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    top: 0.8rem;
+    border-width: 0.8rem 0 0.8rem 1.2rem;
+    border-style: solid;
+    border-color: transparent transparent transparent white;
+}
+
+.play-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+.verse {
+    margin: 1.2rem 0;
+    padding: 1.5rem;
+    background: var(--background-light);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin: 1.2rem 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.verse:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+    
+    background: #fdfdfd;
+    
+}
+
+
+.verse-id {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-right: 1.5rem;
+    font-family: monospace;
+    flex-shrink: 0;
+}
+
+.text-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+.french-text,
+.english-text {
+    transition: opacity 0.3s ease;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    white-space: pre-wrap;
+    line-height: 1.8;
+}
+
+.english-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: rgba(232, 244, 255, 0.95);
+    color: var(--text-color);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+}
+
+.verse:hover .french-text {
+    opacity: 0.2;
+}
+
+.verse:hover .english-text {
+    opacity: 1;
+}
+
+
+.purchase-prompt {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-left: 3px solid var(--error-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.1);
+}
+
+.purchase-prompt h3 {
+    color: var(--text-color);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.purchase-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+}
+
+.purchase-btn:hover {
+    background: var(--primary-dark);
+}
+
+#validation-loading {
+    color: var(--text-color);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.nav-container a:hover {
+    box-shadow: 0 2px 6px rgba(52, 152, 219, 0.1);
+}
+
+
+.purchase-btn:hover {
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+
+.play-btn:hover {
+    box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+}
+
+
+@media (max-width: 768px) {
+    body {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .nav-container a {
+        padding: 0.6rem 1rem;
+    }
+}
