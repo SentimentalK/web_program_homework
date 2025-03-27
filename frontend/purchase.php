@@ -1,36 +1,12 @@
-<?php
-
-session_start();
-require __DIR__ . '/../backend/utils/db.php';
-?>
-
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="fr-FR">
 
 <head>
     <meta charset="UTF-8">
     <title>Purchase Courses</title>
+    <link style="text/css" rel="stylesheet" href="css/global.css">
     <script src="./js/utils.js"></script>
     <style>
-        
-        :root {
-            --primary-color: #3498db;
-            --primary-dark: #2980b9;
-            --text-color: #2c3e50;
-            --background-light: #f8f9fa;
-            --border-color: #bdc3c7;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 0;
-            padding: 2rem;
-            background: var(--background-light);
-            color: var(--text-color);
-        }
-
         .purchase-container {
             position: relative;
             max-width: 800px;
@@ -39,16 +15,6 @@ require __DIR__ . '/../backend/utils/db.php';
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #7f8c8d;
-            transition: color 0.3s ease;
         }
 
         .course-list {
@@ -76,21 +42,33 @@ require __DIR__ . '/../backend/utils/db.php';
             margin-right: 1rem;
         }
 
-        .purchase-btn {
-            background: var(--primary-color);
-            color: white;
+        .purchase-btn,
+        .refund-btn {
+            width: 100%;
             padding: 1rem 2rem;
+            margin-top: 1rem;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             transition: background 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
+            color: white;
+        }
+
+        .purchase-btn {
+            background: var(--primary-color);
         }
 
         .purchase-btn:hover {
             background: var(--primary-dark);
+        }
+
+        .refund-btn {
+            background: #e74c3c;
+        }
+
+        .refund-btn:hover {
+            background: #c0392b;
         }
 
         .validation-message {
@@ -105,53 +83,16 @@ require __DIR__ . '/../backend/utils/db.php';
             font-size: 2rem;
         }
 
-        .refund-btn {
-            background: #e74c3c !important;
-            
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
-            width: 100%;
-            font-size: 1.1rem;
-        }
-
-        .refund-btn:hover {
-            background: #c0392b !important;
-        }
-
-        .free-tag {
-            color: #2ecc71;
-            font-size: 0.9em;
-            font-weight: 500;
-            padding: 0.2rem 0.8rem;
-            border-radius: 4px;
-            background: rgba(46, 204, 113, 0.1);
-        }
-
-        .purchase-tag {
-            color: #7A288A;
-            
-            font-size: 0.9em;
-            font-weight: 500;
-            padding: 0.2rem 0.8rem;
-            border-radius: 4px;
-            background: rgba(122, 40, 138, 0.1);
-            
-        }
-
         label {
             position: relative;
         }
 
         label>span {
-            margin-right: 30px;
             position: absolute;
             right: 0;
             top: 50%;
             transform: translateY(-50%);
+            margin-right: 30px;
         }
     </style>
 </head>
@@ -167,10 +108,9 @@ require __DIR__ . '/../backend/utils/db.php';
         <button class="refund-btn" id="refundBtn" onclick="handleRefund()">Request Refund</button>
         <button class="purchase-btn" onclick="handlePurchase()">Purchase Selected Courses</button>
     </div>
-
     <script src="js/utils.js"></script>
     <script>
-        
+
         async function renderCourses(data) {
             try {
                 const container = document.getElementById('courseList');
@@ -186,13 +126,12 @@ require __DIR__ . '/../backend/utils/db.php';
                     }
                     </label>
                 `).join('');
-
             } catch (error) {
                 showError('Failed to load courses');
             }
         }
 
-        
+
         async function handlePurchase() {
             const checkboxes = document.querySelectorAll('input[name="course_id"]:checked');
             const courseIds = Array.from(checkboxes).map(cb => cb.value);
@@ -246,7 +185,7 @@ require __DIR__ . '/../backend/utils/db.php';
 
                 if (response.ok) {
                     alert('Refund request submitted successfully!');
-                    window.location.reload(); 
+                    window.location.reload();
                 } else {
                     showError(result.msg || 'Refund request failed');
                 }
@@ -255,11 +194,7 @@ require __DIR__ . '/../backend/utils/db.php';
             }
         }
 
-
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            loadCourses().then(data => renderCourses(data));
-        });
+        window.addEventListener('DOMContentLoaded', () => { loadCourses().then(data => renderCourses(data)); });
         document.getElementById('username').textContent = "Hi " + localStorage.getItem('username') + ", please select courses to purchase";
     </script>
 </body>

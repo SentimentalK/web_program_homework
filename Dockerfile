@@ -1,6 +1,6 @@
 FROM php:8.3-apache AS builder
 
-# 安装构建依赖
+# install dependencies
 RUN apt-get update && \
     apt-get install -y \
         libzip-dev \
@@ -10,20 +10,20 @@ RUN apt-get update && \
     && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装 Composer
+# install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 复制依赖定义
+# create a working directory
 WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
-# 安装生产依赖
+# install dependencies
 RUN composer install --no-dev --no-scripts --optimize-autoloader
 
 
 FROM php:8.3-apache
 
-# 从builder阶段复制已安装的依赖
+# Copy the application files from the builder stage
 COPY --from=builder /var/www/html/vendor /var/www/html/vendor
 
 # Enable mod_rewrite and install dependencies

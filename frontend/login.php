@@ -54,25 +54,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <title>Login / Register</title>
+    <link style="text/css" rel="stylesheet" href="css/global.css">
     <style>
         * {
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
-        
         .auth-container {
             max-width: 500px;
             margin: 4rem auto;
-            padding: 2.5rem;
-            
+            padding: 2rem 2.5rem;
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .form-group {
-            margin: 1.8rem 0;
+            margin: 1.5rem 0;
         }
 
         input[type="text"],
@@ -81,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="password"] {
             width: 100%;
             padding: 0.8rem 1.2rem;
-            
             border: 1px solid #bdc3c7;
             border-radius: 6px;
             font-size: 1rem;
@@ -98,38 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 1rem;
             background: #f8f9fa;
             border-radius: 4px;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
-        }
-
-        .auth-container {
-            max-width: 500px;
-            margin: 4rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
+            font-size: 0.9rem;
             color: #7f8c8d;
-            transition: color 0.3s ease;
-        }
-
-        .close-btn:hover {
-            color: #2c3e50;
         }
 
         .tab-controls {
@@ -152,25 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-bottom: 2px solid #3498db;
         }
 
-        .form-group {
-            margin: 1.5rem 0;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .terms-group {
-            margin: 2rem 0;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-
         button[type="submit"] {
             background: #3498db;
             color: white;
@@ -187,17 +136,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #2980b9;
         }
 
-        .validation-message {
+        .validation-message,
+        .error-message {
             color: #ff4444;
             margin: 1rem 0;
             text-align: center;
         }
 
         .error-message {
-            color: #ff4444;
             font-size: 0.9rem;
             margin-top: 0.5rem;
             display: none;
+            text-align: left;
         }
 
         .error-message.show {
@@ -273,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script>
-        
+
         const validationRules = {
             login: {
                 username: value => value.trim().length >= 3 || 'Username must be at least 3 characters',
@@ -294,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         };
 
-        
+
         function handleSubmit(formType, e) {
             e.preventDefault();
             const form = e.target;
@@ -302,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const data = Object.fromEntries(formData.entries());
             let isValid = true;
 
-            
+
             form.querySelectorAll('.error-message').forEach(el => {
                 el.classList.remove('show');
             });
@@ -310,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 input.classList.remove('invalid');
             });
 
-            
+
             for (const [field, rule] of Object.entries(validationRules[formType])) {
                 const value = field === 'terms' ? data[field] === 'on' : data[field] || '';
                 const result = rule(value, data);
@@ -328,11 +278,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             console.log(JSON.stringify(data));
 
-            
+
             if (isValid) {
-                
+
                 const apiPath = formType === 'login' ? '/api/user/login' : '/api/user/register';
-                fetch(apiPath, { 
+                fetch(apiPath, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -340,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     body: JSON.stringify(data)
                 })
                     .then(response => {
-                        console.log('Response:', response); 
+                        console.log('Response:', response);
                         return response.json();
                     })
                     .then(result => {
@@ -359,7 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        
+
         function showGlobalError(message) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'validation-message';
@@ -367,11 +317,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             document.querySelector('.auth-container').prepend(errorDiv);
         }
 
-        
+
         document.getElementById('loginForm').addEventListener('submit', e => handleSubmit('login', e));
         document.getElementById('registerForm').addEventListener('submit', e => handleSubmit('register', e));
 
-        
+
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', function () {
                 const formType = this.closest('form').id === 'loginForm' ? 'login' : 'register';
@@ -398,17 +348,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
         function showForm(formType) {
-            
+
             const loginForm = document.getElementById('loginForm');
             const registerForm = document.getElementById('registerForm');
 
             loginForm.style.display = formType === 'login' ? 'block' : 'none';
             registerForm.style.display = formType === 'register' ? 'block' : 'none';
 
-            
+
             document.querySelector('.validation-message').innerHTML = '';
 
-            
+
             document.querySelectorAll('.tab-controls button').forEach(btn => {
                 btn.classList.remove('active');
             });

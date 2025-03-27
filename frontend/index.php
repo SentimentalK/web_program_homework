@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="fr-FR">
 
 <head>
     <meta charset="UTF-8">
     <title>Assimil Course Home</title>
+    <link style="text/css" rel="stylesheet" href="css/global.css">
     <script src="./js/utils.js"></script>
     <style>
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
             max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            line-height: 1.6;
         }
 
 
@@ -42,10 +37,7 @@
         }
 
         h1 {
-            text-align: center;
-            font-weight: 300;
             margin: 3rem 0 0;
-            font-size: 2.5rem;
             letter-spacing: -0.5px;
         }
 
@@ -81,25 +73,6 @@
             justify-content: space-between;
         }
 
-        .free-tag {
-            color: #2ecc71;
-            font-size: 0.9em;
-            font-weight: 500;
-            padding: 0.2rem 0.8rem;
-            border-radius: 4px;
-            background: rgba(46, 204, 113, 0.1);
-        }
-
-        .purchase-tag {
-            color: #7A288A;
-            font-size: 0.9em;
-            font-weight: 500;
-            padding: 0.2rem 0.8rem;
-            border-radius: 4px;
-            background: rgba(122, 40, 138, 0.1);
-        }
-
-        
         .loading {
             text-align: center;
             padding: 2rem;
@@ -120,6 +93,7 @@
             margin-top: 1rem;
             padding: 0.5rem 1.5rem;
         }
+
         #search-input {
             width: 100%;
             padding: 0.8rem;
@@ -130,7 +104,6 @@
             box-sizing: border-box;
             transition: all 0.3s ease;
             text-align: center;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
         #search-input:focus {

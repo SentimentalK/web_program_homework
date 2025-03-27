@@ -1,13 +1,10 @@
--- database: ./database.sqlite
-
--- 启用外键约束 (SQLite 默认关闭)
+-- sqlite3 ./database.sqlite < ./database.sqlite3-query
 PRAGMA foreign_keys = ON;
 
 DROP TABLE users;
 DROP TABLE purchases;
 DROP VIEW courses;
 
--- 用户表
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
@@ -16,11 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
     phone TEXT UNIQUE NOT NULL,
     created_at DATETIME DEFAULT (datetime('now','localtime'))
 );
-
-
-ATTACH DATABASE '/Users/sentimentalk/codes/fr/textbook/textbook.sqlite' AS source;
-CREATE TABLE main.contents AS SELECT * FROM source.assimil;
-DETACH DATABASE source;
 
 CREATE TABLE purchases (
     user_id INTEGER NOT NULL,
@@ -39,22 +31,12 @@ SELECT CAST(id AS INTEGER) AS course_id,
 FROM contents
 GROUP BY CAST(id AS INTEGER);
 
-SELECT course_id,FREE FROM courses ORDER BY course_id;
+-- get data from another database
+ATTACH DATABASE '/Users/sentimentalk/codes/fr/textbook/textbook.sqlite' AS source;
+CREATE TABLE main.contents AS SELECT * FROM source.assimil;
+DETACH DATABASE source;
 
+-- get course data
 SELECT * from contents 
 WHERE CAST(id AS FLOAT) BETWEEN 1.00 AND 1.99
 ORDER BY CAST(id AS FLOAT);
-
--- 课程表
-SELECT 
-    c.course_id,
-    CASE 
-        WHEN p.user_id IS NOT NULL THEN 2
-        WHEN c.free = 1 THEN 1
-        ELSE 0
-    END AS status
-FROM courses c
-LEFT JOIN purchases p 
-    ON c.course_id = p.course_id AND p.user_id = 7;
-
-            

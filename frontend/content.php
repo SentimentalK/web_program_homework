@@ -45,12 +45,14 @@ if ($next_chapter % 7 == 0) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="fr-FR">
 
 <head>
     <meta charset="UTF-8">
     <title>Chapter <?= $course_id ?> - Assimil French</title>
+    <link style="text/css" rel="stylesheet" href="css/global.css">
     <link style="text/css" rel="stylesheet" href="css/content.css">
+    <style> .chapter { margin: 2rem 5rem; } </style>
 </head>
 
 <body>
@@ -105,26 +107,28 @@ if ($next_chapter % 7 == 0) {
     <script>
 
         document.addEventListener('DOMContentLoaded', () => {
-        const courseId = <?= $course_id ?>;
-        const loading = document.getElementById('validation-loading');
-        const contentContainer = document.getElementById('content-body');
-        const purchasePrompt = document.getElementById('purchase-prompt');
-        const purchaseBtn = document.querySelector('.purchase-btn');
+            const courseId = <?= $course_id ?>;
+            const loading = document.getElementById('validation-loading');
+            const contentContainer = document.getElementById('content-body');
+            const purchasePrompt = document.getElementById('purchase-prompt');
+            const purchaseBtn = document.querySelector('.purchase-btn');
 
-        validatePurchase(courseId)
-                .then(valid => {
-                    loading.classList.add('hidden');
-                    if (valid) {
-                        contentContainer.classList.remove('hidden');
-                    } else {
-                        purchasePrompt.classList.remove('hidden');
-                        purchaseBtn.onclick = () => window.location.href = 'purchase.php';
-                    }
-                })
-                .catch(error => {
-                    console.error('fail:', error);
-                    loading.innerHTML = 'Something Wrong <a href="javascript:location.reload()">Retry</a>';
-                });
+            validatePurchase(courseId)
+                    .then(valid => {
+                        loading.classList.add('hidden');
+                        if (valid) {
+                            contentContainer.classList.remove('hidden');
+                        } else {
+                            purchasePrompt.classList.remove('hidden');
+                            const token = localStorage.getItem('token');
+                            page = !token ? 'login.php' : 'purchase.php';
+                            purchaseBtn.onclick = () => window.location.href = page;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('fail:', error);
+                        loading.innerHTML = 'Something Wrong <a href="javascript:location.reload()">Retry</a>';
+                    });
     });
 
 
