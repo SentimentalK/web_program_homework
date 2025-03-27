@@ -5,9 +5,6 @@ require __DIR__ . '/../backend/utils/db.php';
 
 try {
     $course_id = isset($_GET['course_id']) ? (int) $_GET['course_id'] : 0;
-    if ($course_id < 1 || $course_id > 21) {
-        throw new Exception("invalid ID", 400);
-    }
 
     // get course content
     global $db;

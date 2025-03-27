@@ -100,7 +100,7 @@
 <body>
     <div class="purchase-container">
         <div class="close-btn" onclick="window.location.href='/'">×</div>
-        <h1 id="username">Select Courses to Purchase</h1>
+        <h1 id="username"></h1>
         <div class="course-list" id="courseList">
             <div class="loading">Loading courses...</div>
         </div>

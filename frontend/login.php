@@ -161,15 +161,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- 保持原有HTML结构，移除所有HTML验证属性 -->
-    <div class="auth-container">
-        <div class="close-btn" onclick="window.location.href='/'">×</div>
+        <div class="auth-container">
+            <div class="close-btn" onclick="window.location.href='/'">×</div>
+            <div class="validation-message"></div>
 
-        <div class="tab-controls">
-            <button onclick="showForm('login')" class="active">Login</button>
-            <button onclick="showForm('register')">Sign Up</button>
-        </div>
-        <!-- 登录表单 -->
+            <div class="tab-controls">
+                <button onclick="showForm('login')" class="active">Login</button>
+                <button onclick="showForm('register')">Sign Up</button>
+            </div>
+        
+        <!-- login form -->
         <form id="loginForm" method="post" style="display: block;">
             <div class="form-group">
                 <label>Username:</label>
@@ -184,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Login</button>
         </form>
 
-        <!-- 注册表单 -->
+        <!-- register form -->
         <form id="registerForm" method="post" style="display: none;">
             <div class="form-group">
                 <label>Username:</label>
@@ -224,6 +225,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
 
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const validationMessage = document.querySelector('.validation-message');
         const validationRules = {
             login: {
                 username: value => value.trim().length >= 3 || 'Username must be at least 3 characters',
@@ -252,14 +256,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const data = Object.fromEntries(formData.entries());
             let isValid = true;
 
-
             form.querySelectorAll('.error-message').forEach(el => {
                 el.classList.remove('show');
             });
             form.querySelectorAll('input').forEach(input => {
                 input.classList.remove('invalid');
             });
-
 
             for (const [field, rule] of Object.entries(validationRules[formType])) {
                 const value = field === 'terms' ? data[field] === 'on' : data[field] || '';
@@ -276,11 +278,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-            console.log(JSON.stringify(data));
-
 
             if (isValid) {
-
                 const apiPath = formType === 'login' ? '/api/user/login' : '/api/user/register';
                 fetch(apiPath, {
                     method: 'POST',
@@ -309,18 +308,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        function showForm(formType) {
+            
+            const buttons = document.querySelectorAll('.tab-controls > button');
+
+            loginForm.style.display = formType === 'login' ? 'block' : 'none';
+            registerForm.style.display = formType === 'register' ? 'block' : 'none';
+
+            buttons.forEach((button, index) => {
+                if ((formType === 'login' && index === 0) || (formType === 'register' && index === 1)) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            validationMessage.innerHTML = '';
+        }
 
         function showGlobalError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'validation-message';
-            errorDiv.innerHTML = `<p>${message}</p>`;
-            document.querySelector('.auth-container').prepend(errorDiv);
+            validationMessage.innerHTML = `<p>${message}</p>`;
         }
 
 
-        document.getElementById('loginForm').addEventListener('submit', e => handleSubmit('login', e));
-        document.getElementById('registerForm').addEventListener('submit', e => handleSubmit('register', e));
-
+        loginForm.addEventListener('submit', e => handleSubmit('login', e));
+        registerForm.addEventListener('submit', e => handleSubmit('register', e));
 
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', function () {
@@ -347,23 +358,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             });
         });
-        function showForm(formType) {
-
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-
-            loginForm.style.display = formType === 'login' ? 'block' : 'none';
-            registerForm.style.display = formType === 'register' ? 'block' : 'none';
-
-
-            document.querySelector('.validation-message').innerHTML = '';
-
-
-            document.querySelectorAll('.tab-controls button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
     </script>
 </body>
 

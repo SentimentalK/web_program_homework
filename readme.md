@@ -1,9 +1,9 @@
 # Web Programming Assignment
 
-## Requirments
+### Requirments
 docker
 
-## Development
+### Development
 ```docker-compose down && docker-compose up --build```
 
 Access: http://localhost:8000
