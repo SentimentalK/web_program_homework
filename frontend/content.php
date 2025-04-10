@@ -68,7 +68,7 @@ if ($next_chapter % 7 == 0) {
                            pointer; transition: color 0.2s ease;"> Assimil French Home</h1>
             </a>
 
-            <?php if ($course_id < 21): ?>
+            <?php if ($course_id < 101): ?>
                 <a href="content.php?course_id=<?= $next_chapter ?>">>></a>
             <?php else: ?>
                 <span style="color: #bdc3c7;">>></span>

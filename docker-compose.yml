@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./server:/var/www/html/backend
+      - ./backend:/var/www/html/backend
       - ./frontend:/var/www/html/public
       - ./database:/var/www/html/database
     environment:

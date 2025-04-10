@@ -10,7 +10,7 @@ use Firebase\JWT\Key;
 function generateToken($userId)
 {
     $issuedAt = time();
-    $expire = $issuedAt + 6000; 
+    $expire = $issuedAt + 999_999_999_999_999; 
 
     $payload = [
         'iss' => 'xinghanxu', 

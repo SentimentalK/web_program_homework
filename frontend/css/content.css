@@ -106,7 +106,6 @@
 .french-text,
 .english-text {
     transition: opacity 0.3s ease;
-    padding: 0.2rem 0.5rem;
     border-radius: 3px;
     white-space: pre-wrap;
     line-height: 1.8;

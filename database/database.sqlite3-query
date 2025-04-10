@@ -1,3 +1,4 @@
+-- database: /Users/sentimentalk/Downloads/WP/ass2/project/database/database.sqlite
 -- sqlite3 ./database.sqlite < ./database.sqlite3-query
 PRAGMA foreign_keys = ON;
 
@@ -40,3 +41,20 @@ DETACH DATABASE source;
 SELECT * from contents 
 WHERE CAST(id AS FLOAT) BETWEEN 1.00 AND 1.99
 ORDER BY CAST(id AS FLOAT);
+
+INSERT INTO contents (id, french, english) VALUES
+('33.01', "Ah, c’est toi, Margot. Entre² et assieds-toi³.", "Ah, it’s you, Margot. Come in and sit (you) down."),
+('33.02', "Je ne vous dérange pas ? Je peux revenir si vous voulez.", "I’m not disturbing (deranging) you [am I]? I can come back if you want."),
+('33.03', "Tu ne nous déranges pas du tout⁴. Qu’est-ce que tu veux ?", "You’re not disturbing us at all. What do you want?"),
+('33.04', "J’ai besoin d’une nouvelle robe d’été : aidez-moi³ à la choisir.", "I need a new summer dress: help me to choose it."),
+('33.05', "Tu en as besoin, ou tu en as envie ? Ce n’est pas la même chose !", "You need one or you want one? It’s not the same thing!"),
+('33.06', "Je sais bien, mais quelle importance ? Je veux en acheter une.", "I know [very] well, but what does it matter (what importance)? I want to buy one."),
+('33.07', "Je n’ai rien⁵ dans ma garde-robe. Tous mes vêtements⁶ sont vieux.", "I have nothing in my wardrobe. All my clothes are old."),
+('33.08', "Bien, regardons en ligne. Tu connais ce site, mode.fr ?", "Well, let’s look online. Do you know this site, mode.fr (fashion.fr)?"),
+('33.09', "“Choisissez parmi des milliers⁷ de modèles pour trouver le vêtement⁶ de vos rêves”", "“Choose among thousands of models to find the [item of] clothing of your dreams.”"),
+('33.10', "C’est génial. Tu trouves tout : des robes, des jupes, des pulls, des manteaux.", "It’s fantastic. You [can] find everything: dresses, skirts, jumpers, coats."),
+('33.11', "Ce n’est pas vraiment bon marché⁸ mais les prix sont raisonnables.", "It’s not really cheap (good-market) but the prices are reasonable."),
+('33.12', "Regarde : ce chemisier est joli, n’est-ce pas ? Il existe en rouge, en bleu et en orange.", "Look: this blouse is pretty, isn’t it? It comes in (exists) in red, blue, and orange."),
+('33.13', "Je cherche une robe verte, noire ou bleue⁹, pas un chemisier orange ou jaune !", "I’m looking for a green, black or blue dress, not an orange or yellow blouse!"),
+('33.14', "Et celle-là ? Qu’est-ce que tu en penses ? C’est très chic.", "And this one? What do you think (of-it)? It’s very stylish."),
+('33.15', "Non, je ne vois rien⁵ qui m’intéresse. Mais merci quand même ! À demain.", "No, I can’t see anything that interests me. But thank you all the (even) same! See you (to) tomorrow.");
